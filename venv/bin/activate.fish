@@ -33,7 +33,7 @@ end
 # Unset irrelevant variables.
 deactivate nondestructive
 
-set -gx VIRTUAL_ENV "/home/waleedpi/led_motion/venv"
+set -gx VIRTUAL_ENV "/home/sameerzaher/Drivers_RaspPI_SmartSchool/venv"
 
 set -gx _OLD_VIRTUAL_PATH $PATH
 set -gx PATH "$VIRTUAL_ENV/bin" $PATH

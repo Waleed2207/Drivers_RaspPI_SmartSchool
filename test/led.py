@@ -111,4 +111,4 @@ if __name__ == '__main__':
     finally:
         # Cleanup GPIO pins when the program is stopped
         GPIO.cleanup()  # Clean up GPIO on exit or interrupt
-ç
+

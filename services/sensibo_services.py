@@ -28,8 +28,7 @@ def fetch_ac_state_from_sensibo():
     except Exception as e:
         logging.error(f"Error retrieving AC state: {e}")
         return {'success': False, 'message': 'Error fetching data', 'details': str(e)}
-
-
+        
 def fetch_temperature_data_from_sensibo():
     """Fetches temperature and humidity measurements from the Sensibo API."""
     sensibo_device_id = os.getenv('SENSIBO_DEVICE_ID')

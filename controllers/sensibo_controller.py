@@ -1,5 +1,7 @@
-from flask import Blueprint, request, jsonify, views
-
+from flask import request, jsonify
+import requests
+import os
+import logging
 # Ensure correct import path for Sensibo services
 from services.sensibo_services import (
     fetch_ac_state_from_sensibo,

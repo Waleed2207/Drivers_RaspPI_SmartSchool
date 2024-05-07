@@ -1,35 +1,26 @@
-# gpio_manager.py
-
-import RPi.GPIO as GPIO
+from gpiozero import LED, OutputDevice, MotionSensor
 
 class GPIOManager:
     def __init__(self, led_pin, relay_pin, pir_pin):
-        self.led_pin = led_pin
-        self.relay_pin = relay_pin
-        self.pir_pin = pir_pin
-        self.setup_gpio()
-    
-    def setup_gpio(self):
-        try:
-            GPIO.setwarnings(False)
-            GPIO.setmode(GPIO.BOARD)
-            GPIO.setup(self.led_pin, GPIO.OUT)
-            GPIO.setup(self.relay_pin, GPIO.OUT)
-            GPIO.setup(self.pir_pin, GPIO.IN)
-            GPIO.output(self.relay_pin, GPIO.HIGH)  # Ensure the relay is off initially
-        except Exception as e:
-            print(f"Error setting up GPIO: {e}")
+        # Initialize GPIO devices using gpiozero
+        self.led = LED(led_pin)  # GPIO pin for the LED
+        self.relay = OutputDevice(relay_pin, active_high=False, initial_value=False)  # Active low relay
+        self.pir = MotionSensor(pir_pin)  # GPIO pin for the PIR sensor
     
     def led_relay_on(self):
-        GPIO.output(self.led_pin, GPIO.HIGH)
-        GPIO.output(self.relay_pin, GPIO.LOW)  # Active low relay
+        """Turn the LED and relay on."""
+        self.led.on()
+        self.relay.on()  # Activate the relay (active low)
+        print("LED and Relay are ON.")
     
     def led_relay_off(self):
-        GPIO.output(self.led_pin, GPIO.LOW)
-        GPIO.output(self.relay_pin, GPIO.HIGH)  # Deactivate relay
-    
-    def read_pir(self):
-        return GPIO.input(self.pir_pin)
-    
-    def cleanup(self):
-        GPIO.cleanup()
+        """Turn the LED and relay off."""
+        self.led.off()
+        self.relay.off()  # Deactivate the relay (active low)
+        print("LED and Relay are OFF.")
+
+    def monitor_pir(self):
+        """Monitor the PIR sensor and control the LED and relay based on motion detection."""
+        print("Monitoring PIR sensor. Press CTRL+C to exit.")
+        self.pir.when_motion = self.led_relay_on
+        self.pir.when_no_motion = self.led_relay_off
