@@ -20,7 +20,7 @@ class ServerCommunicator:
                 print(f"Server check failed: {e}")
                 return False
 
-    def send_request_to_node(self, state, space_id, room_id, room_name, device_id, raspberryPiIP, user_oid):
+    def send_request_to_node(self, state, space_id, room_id, room_name, device_id, raspberryPiIP, Control, user_oid):
         url = f"http://{self.address}:{self.port}/api-sensors/motion-detected"
         payload = {
             "state": state,
@@ -29,6 +29,7 @@ class ServerCommunicator:
             "room_name": room_name, 
             "device_id": device_id,
             "raspberry_pi_ip": raspberryPiIP,
+            "control": Control,
             "user": user_oid
         }
 
